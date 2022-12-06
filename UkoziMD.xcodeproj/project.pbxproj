@@ -7,19 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A0568D30291073FC00E2793B /* Comms.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0568D2F291073FC00E2793B /* Comms.swift */; };
+		A074A554291B469C00F48971 /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = A074A553291B469C00F48971 /* AppIcon.appiconset */; };
 		A097CB5B290DEE9400B5F0DD /* UkoziMDApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A097CB5A290DEE9400B5F0DD /* UkoziMDApp.swift */; };
 		A097CB5D290DEE9400B5F0DD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A097CB5C290DEE9400B5F0DD /* ContentView.swift */; };
 		A097CB5F290DEE9500B5F0DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A097CB5E290DEE9500B5F0DD /* Assets.xcassets */; };
 		A097CB62290DEE9500B5F0DD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A097CB61290DEE9500B5F0DD /* Preview Assets.xcassets */; };
+		A0D10CBC2916119200F9DE4B /* Transforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D10CBB2916119200F9DE4B /* Transforms.swift */; };
+		A0D4ECBC291A072D00D132F5 /* 5by7.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0D4ECBB291A072D00D132F5 /* 5by7.ttf */; };
+		A0D86F502922D25200F1B5FF /* minidisc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D86F4F2922D25200F1B5FF /* minidisc.swift */; };
+		A0EC4F80291333BA00FA87A3 /* SwiftSerial in Frameworks */ = {isa = PBXBuildFile; productRef = A0EC4F7F291333BA00FA87A3 /* SwiftSerial */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A0568D2F291073FC00E2793B /* Comms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comms.swift; sourceTree = "<group>"; };
+		A074A553291B469C00F48971 /* AppIcon.appiconset */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AppIcon.appiconset; sourceTree = "<group>"; };
 		A097CB57290DEE9400B5F0DD /* UkoziMD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UkoziMD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A097CB5A290DEE9400B5F0DD /* UkoziMDApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UkoziMDApp.swift; sourceTree = "<group>"; };
 		A097CB5C290DEE9400B5F0DD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A097CB5E290DEE9500B5F0DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A097CB61290DEE9500B5F0DD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A097CB63290DEE9500B5F0DD /* UkoziMD.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UkoziMD.entitlements; sourceTree = "<group>"; };
+		A0D10CBB2916119200F9DE4B /* Transforms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transforms.swift; sourceTree = "<group>"; };
+		A0D4ECBB291A072D00D132F5 /* 5by7.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 5by7.ttf; sourceTree = "<group>"; };
+		A0D86F4F2922D25200F1B5FF /* minidisc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = minidisc.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0EC4F80291333BA00FA87A3 /* SwiftSerial in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,8 +64,13 @@
 		A097CB59290DEE9400B5F0DD /* UkoziMD */ = {
 			isa = PBXGroup;
 			children = (
+				A074A553291B469C00F48971 /* AppIcon.appiconset */,
+				A0D4ECBB291A072D00D132F5 /* 5by7.ttf */,
+				A0D10CBB2916119200F9DE4B /* Transforms.swift */,
+				A0D86F4F2922D25200F1B5FF /* minidisc.swift */,
 				A097CB5A290DEE9400B5F0DD /* UkoziMDApp.swift */,
 				A097CB5C290DEE9400B5F0DD /* ContentView.swift */,
+				A0568D2F291073FC00E2793B /* Comms.swift */,
 				A097CB5E290DEE9500B5F0DD /* Assets.xcassets */,
 				A097CB63290DEE9500B5F0DD /* UkoziMD.entitlements */,
 				A097CB60290DEE9500B5F0DD /* Preview Content */,
@@ -85,6 +102,9 @@
 			dependencies = (
 			);
 			name = UkoziMD;
+			packageProductDependencies = (
+				A0EC4F7F291333BA00FA87A3 /* SwiftSerial */,
+			);
 			productName = UkoziMD;
 			productReference = A097CB57290DEE9400B5F0DD /* UkoziMD.app */;
 			productType = "com.apple.product-type.application";
@@ -97,7 +117,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1400;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1410;
 				TargetAttributes = {
 					A097CB56290DEE9400B5F0DD = {
 						CreatedOnToolsVersion = 14.0.1;
@@ -113,6 +133,9 @@
 				Base,
 			);
 			mainGroup = A097CB4E290DEE9400B5F0DD;
+			packageReferences = (
+				A0EC4F7E291333BA00FA87A3 /* XCRemoteSwiftPackageReference "SwiftSerial" */,
+			);
 			productRefGroup = A097CB58290DEE9400B5F0DD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -127,8 +150,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A074A554291B469C00F48971 /* AppIcon.appiconset in Resources */,
 				A097CB62290DEE9500B5F0DD /* Preview Assets.xcassets in Resources */,
 				A097CB5F290DEE9500B5F0DD /* Assets.xcassets in Resources */,
+				A0D4ECBC291A072D00D132F5 /* 5by7.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +166,9 @@
 			files = (
 				A097CB5D290DEE9400B5F0DD /* ContentView.swift in Sources */,
 				A097CB5B290DEE9400B5F0DD /* UkoziMDApp.swift in Sources */,
+				A0D86F502922D25200F1B5FF /* minidisc.swift in Sources */,
+				A0D10CBC2916119200F9DE4B /* Transforms.swift in Sources */,
+				A0568D30291073FC00E2793B /* Comms.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +179,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=*]" = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -180,6 +211,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -197,7 +229,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -211,6 +243,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -240,6 +274,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -251,7 +286,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -265,21 +300,28 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				ASSETCATALOG_COMPILER_STANDALONE_ICON_BEHAVIOR = all;
 				CODE_SIGN_ENTITLEMENTS = UkoziMD/UkoziMD.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"UkoziMD/Preview Content\"";
 				DEVELOPMENT_TEAM = 782YT6AZ5K;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = UkoziMD;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				MARKETING_VERSION = 0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ukozi.UkoziMD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -292,21 +334,28 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				ASSETCATALOG_COMPILER_STANDALONE_ICON_BEHAVIOR = all;
 				CODE_SIGN_ENTITLEMENTS = UkoziMD/UkoziMD.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"UkoziMD/Preview Content\"";
 				DEVELOPMENT_TEAM = 782YT6AZ5K;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = UkoziMD;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				MARKETING_VERSION = 0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ukozi.UkoziMD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -336,6 +385,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A0EC4F7E291333BA00FA87A3 /* XCRemoteSwiftPackageReference "SwiftSerial" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yeokm1/SwiftSerial.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A0EC4F7F291333BA00FA87A3 /* SwiftSerial */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0EC4F7E291333BA00FA87A3 /* XCRemoteSwiftPackageReference "SwiftSerial" */;
+			productName = SwiftSerial;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A097CB4F290DEE9400B5F0DD /* Project object */;
 }
