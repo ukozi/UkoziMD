@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftSerial
+
 //var connection:Int = 0
 let serialPort: SerialPort = SerialPort(path: "/dev/cu.usbserial-4230")
 var currentTrackNumber:UInt8 = 0
@@ -26,6 +27,8 @@ func connect() {
         print("Port Opened.")
     } catch PortError.failedToOpen {
         print("Serial Port Failed To Open")
+        newResponse.nowPlaying = "No MiniDisc deck is connected."
+        
     } catch {
         print("Error: \(error)")
     }

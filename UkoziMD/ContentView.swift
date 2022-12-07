@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var responseDatum = newResponse
-    
+    @State var failedConnect = false
     var body: some View {
         
         VStack(alignment: .leading) {
@@ -25,11 +25,10 @@ struct ContentView: View {
                     Text(responseDatum.thisDisc.Title)
                         .font(Font.custom("5by7", size: 18))
                         .padding(EdgeInsets(top: 8, leading: 10, bottom: 5, trailing: 0))
-                    
-                    
                 }
                 
             }
+            
             HStack {
                 Picker(selection: .constant(1), label: Text("Recording Source")) {
                     Text("Analog In").tag(1)
@@ -157,4 +156,5 @@ struct ContentView: View {
         }
         
     }
+    
 }

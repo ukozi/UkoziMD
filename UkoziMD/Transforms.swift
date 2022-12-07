@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 var trackCounter: Int = 0
 
 
@@ -190,8 +191,10 @@ class responseDecoder: ObservableObject {
 }
 
 var newResponse = responseDecoder()
+var listen = true
+
 func backgroundRead() {
-    while true {
+    while listen==true {
         do {
             let response = try serialPort.readByte()
             let responseBinary:UInt8 = response
@@ -210,6 +213,7 @@ func backgroundRead() {
         }
         catch {
             print("Error: \(error)")
+            listen = false
         }
     }
 }
