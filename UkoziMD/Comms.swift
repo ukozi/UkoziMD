@@ -20,7 +20,6 @@ extension Data {
 }
 
 func connect() {
-
     do {
         try serialPort.openPort()
         serialPort.setSettings(receiveRate: .baud9600, transmitRate: .baud9600, minimumBytesToRead: 0)

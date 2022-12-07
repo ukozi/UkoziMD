@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct ContentView: View {
     @ObservedObject var responseDatum = newResponse
     @State var failedConnect = false
