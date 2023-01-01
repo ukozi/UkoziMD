@@ -174,7 +174,7 @@ class responseDecoder: ObservableObject {
                 let cmd_list:[UInt8] = [0x81,0x08,0x07,0xb0,0x5a,trackHex,0x00,0xff]
                 let cmd_buffer = Data(cmd_list)
                 do {
-                    let bytesWritten = try serialPort.writeData(cmd_buffer)
+                    try serialPort.writeData(cmd_buffer)
                     
                     track = track + 1
                 } catch {
