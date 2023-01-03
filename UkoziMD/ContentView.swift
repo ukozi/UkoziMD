@@ -10,6 +10,9 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var responseDatum = newResponse
     @State var failedConnect = false
+    @State var playMode: Int = 4
+    @State var recordingSource: Int = 1
+    
     var body: some View {
         
         VStack(alignment: .leading) {
@@ -28,23 +31,6 @@ struct ContentView: View {
                 
             }
             
-            HStack {
-                Picker(selection: .constant(1), label: Text("Recording Source")) {
-                    Text("Analog In").tag(1)
-                    Text("Optical In 1").tag(2)
-                    Text("Optical In 2").tag(3)
-                } .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 0))
-                Picker(selection: .constant(4), label: Text("Play Mode")) {
-                    Text("Shuffle").tag(1)
-                    Text("Repeat Single").tag(2)
-                    Text("Repeat All").tag(3)
-                    Text("Play Through").tag(4)
-                } .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-                
-                
-            }
-            HStack(alignment: .center) {
-            }
             .toolbar(id: "Main") {
                 
                 ToolbarItem(id: "Record") {
@@ -138,8 +124,74 @@ struct ContentView: View {
                 
             }
             
-            .navigationTitle("UkoziMD")
+            HStack {
+                Spacer()
+                if responseDatum.playModesState == 1{
+                    Label("Shuffle", systemImage: "shuffle.circle.fill")
+                        .padding(EdgeInsets(top: 3, leading: 10, bottom: 10, trailing: 0))
+                        .foregroundColor(.accentColor)
+                        .labelStyle(.iconOnly)
+                } else {
+                    Label("Shuffle", systemImage: "shuffle.circle")
+                        .padding(EdgeInsets(top: 3, leading: 10, bottom: 10, trailing: 0))
+                        .foregroundColor(.secondary)
+                        .labelStyle(.iconOnly)
+                }
+                if responseDatum.repeatModeState == 1 {
+                    Label("Repeat", systemImage: "repeat.circle.fill")
+                        .padding(EdgeInsets(top: 3, leading: 10, bottom: 10, trailing: 0))
+                        .foregroundColor(.accentColor)
+                        .labelStyle(.iconOnly)
+                } else if responseDatum.repeatModeState == 2 {
+                    Label("Repeat", systemImage: "repeat.1.circle.fill")
+                        .padding(EdgeInsets(top: 3, leading: 10, bottom: 10, trailing: 0))
+                        .foregroundColor(.accentColor)
+                        .labelStyle(.iconOnly)
+                } else {
+                    Label("Repeat", systemImage: "repeat.circle")
+                        .padding(EdgeInsets(top: 3, leading: 10, bottom: 10, trailing: 0))
+                        .foregroundColor(.secondary)
+                        .labelStyle(.iconOnly)
+                }
+                if responseDatum.inputModeState == 0 {
+                    Label("Analog", systemImage: "cable.connector.horizontal")
+                        .padding(EdgeInsets(top: 3, leading: 10, bottom: 10, trailing: 0))
+                        .foregroundColor(.accentColor)
+                        .labelStyle(.iconOnly)
+                } else {
+                    Label("Analog", systemImage: "cable.connector.horizontal")
+                        .padding(EdgeInsets(top: 3, leading: 10, bottom: 10, trailing: 0))
+                        .foregroundColor(.secondary)
+                        .labelStyle(.iconOnly)
+                }
+                if responseDatum.inputModeState == 1 {
+                    Label("Optical 1", systemImage: "light.beacon.min")
+                        .padding(EdgeInsets(top: 3, leading: 10, bottom: 10, trailing: 0))
+                        .foregroundColor(.accentColor)
+                        .labelStyle(.iconOnly)
+                } else {
+                    Label("Optical 1", systemImage: "light.beacon.min")
+                        .padding(EdgeInsets(top: 3, leading: 10, bottom: 10, trailing: 0))
+                        .foregroundColor(.secondary)
+                        .labelStyle(.iconOnly)
+                }
+                if responseDatum.inputModeState == 2{
+                    Label("Optical 2", systemImage: "light.beacon.min")
+                        .padding(EdgeInsets(top: 3, leading: 10, bottom: 10, trailing: 10))
+                        .foregroundColor(.accentColor)
+                        .labelStyle(.iconOnly)
+                } else {
+                    Label("Optical 2", systemImage: "light.beacon.min")
+                        .padding(EdgeInsets(top: 3, leading: 10, bottom: 10, trailing: 10))
+                        .foregroundColor(.secondary)
+                        .labelStyle(.iconOnly)
+                }
+            }
             
+            
+            
+            
+            .navigationTitle("UkoziMD")
             .onAppear(perform:{
                 connect()
                 DispatchQueue.global(qos: .userInitiated).async {
@@ -148,6 +200,8 @@ struct ContentView: View {
                 sleep(5)
                 getTitle()
             })
+            
+            
             
             
             

@@ -31,6 +31,14 @@ class responseDecoder: ObservableObject {
     @Published var thisDisc: Disc = Disc(Title: "", tracks: [])
     @Published var thisTrack: Track = Track(id: 0, title: "")
     @Published var nowPlaying: String = ""
+    @Published var playModesState: Int = 0
+    //0 = Straight Play thru; 1 = Shuffle; 2 = Program
+    @Published var inputModeState: Int = 0
+    // 0 = Analog; 1 = Optical1; 2 = Optical2
+    @Published var repeatModeState: Int = 0
+    // 0 = No Repeat; 1 = Repeat All; 2 = Repeat 1
+    @Published var discModeState: Int = 0
+    // 0 = No Disc; 1 = Stopped; 2 = Playing; 3 = Queued for Recording
     
     
     func mdInterpret() {
@@ -40,10 +48,12 @@ class responseDecoder: ObservableObject {
             print("MiniDisc is stopped. Ready.")
             getTitle()
             getTotalTracks()
+            nowPlaying = ""
             
         case [144, 7, 5, 71, 64, 3, 255]:
             print("No MiniDisc Loaded!")
-            
+            nowPlaying = "No Disc"
+            thisDisc.Title = ""
             
         case [144, 7, 5, 71, 2, 64, 255]:
             print("Attempting to eject a MiniDisc...")
@@ -59,6 +69,7 @@ class responseDecoder: ObservableObject {
             print("A MiniDisc was ejected.")
             thisDisc.tracks = []
             nowPlaying = "No Disc"
+            thisDisc.Title = ""
             trackCounter = 0
             
             
@@ -158,7 +169,88 @@ class responseDecoder: ObservableObject {
             getTrackTitles(totalTracks: totalTracks, responseData: responseData[8])
             print(decodedTitle + " has " + strTotalTracks + " tracks.")
             
+        case 32:
+            
+            switch responseData[6] { //From 0 - This byte is the disc state
+            case 0:
+                discModeState = 1
+                print("MiniDisc Present. Stopped.")
+                
+            case 1:
+                discModeState = 2
+                print("MiniDisc Present. Playing.")
+                
+            case 5:
+                discModeState = 3
+                print("MiniDisc Present. Queued for Recording.")
+                
+            case 35:
+                discModeState = 0
+                print("No MiniDisc Present.")
+                
+            default: print("New uninterpreted response from deck!"); print(Array(responseData))
+            }
+            
+            switch responseData[7] { //From 0 - This byte is the playback mode state
+            case 160:
+                repeatModeState = 0
+                playModesState = 0
+                print("No Repeat. No Shuffle.")
+            case 161:
+                repeatModeState = 0
+                playModesState = 1
+                print("No Repeat. Shuffle.")
+            case 162:
+                repeatModeState = 0
+                playModesState = 2
+                print("No Repeat. Program.")
+            case 168:
+                repeatModeState = 1
+                playModesState = 0
+                print("Repeat All. No Shuffle.")
+            case 169:
+                repeatModeState = 1
+                playModesState = 1
+                print("Repeat All. Shuffle.")
+            case 170:
+                repeatModeState = 1
+                playModesState = 2
+                print("Repeat All. Program.")
+            case 176:
+                repeatModeState = 2
+                playModesState = 0
+                print("Repeat 1. No Shuffle.")
+            case 177:
+                repeatModeState = 2
+                playModesState = 1
+                print("Repeat 1. Shuffle.")
+            case 178:
+                repeatModeState = 2
+                playModesState = 2
+                print("Repeat 1. Program.")
+                
+            default: print("New uninterpreted response from deck!"); print(Array(responseData))
+            }
+            
+            switch responseData[8] { //From 0 - This Byte is the Input Source state
+            case 1:
+                inputModeState = 0
+                print("Input Method is Analog")
+            case 3:
+                inputModeState = 1
+                print("Input Method is Optical 1")
+            case 4:
+                inputModeState = 2
+                print("Input Method is Optical 2")
+            default: print("New uninterpreted response from deck!"); print(Array(responseData))
+            }
+            
+            
+            
+            
         default: print("New uninterpreted response from deck!"); print(Array(responseData))
+            
+            
             
         }
         
