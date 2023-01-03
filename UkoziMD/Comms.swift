@@ -102,9 +102,12 @@ func stage() {
 
 func next() {
     let cmd_list:[UInt8] = [0x81,0x06,0x07,0xb0,0x08,0xff]
+    let cmd_list2:[UInt8] = [0x81,0x06,0x07,0xb0,0x0f,0xff]
     let cmd_buffer = Data(cmd_list)
+    let cmd_buffer2 = Data(cmd_list2)
     do {
         try serialPort.writeData(cmd_buffer)
+        try serialPort.writeData(cmd_buffer2)
         
     } catch {
         print("Error: \(error)")
@@ -165,6 +168,16 @@ func getTotalTracks() {
     do {
         try serialPort.writeData(cmd_buffer)
 
+    } catch {
+        print("Error: \(error)")
+    }
+}
+func getDeckState() {
+    let cmd_list2:[UInt8] = [0x81,0x06,0x07,0xb0,0x0f,0xff]
+    let cmd_buffer2 = Data(cmd_list2)
+    do {
+        try serialPort.writeData(cmd_buffer2)
+        
     } catch {
         print("Error: \(error)")
     }

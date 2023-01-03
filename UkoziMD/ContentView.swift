@@ -63,7 +63,10 @@ struct ContentView: View {
                     }
                 }
                 ToolbarItem(id: "Next") {
-                    Button(action: {next()}){
+                    Button(action: {
+                        next()
+                        
+                    }){
                         Label("Next", systemImage: "forward.end.fill")
                         // .labelStyle(.iconOnly)
                             .foregroundColor(.green)
@@ -198,7 +201,8 @@ struct ContentView: View {
                     backgroundRead()
                 }
                 sleep(5)
-                getTitle()
+                stop()
+                getDeckState()
             })
             
             
