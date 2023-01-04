@@ -9,12 +9,13 @@ import Foundation
 
 struct Disc {
     var Title: String
+    var trackIndex: String
     var tracks: [Track]
 }
 
 struct Track: Identifiable {
-    var id: Int
-    var title: String
-    var time: String?
+    public var id: Int
+    public var title: String
+    public var time: String
     
 }

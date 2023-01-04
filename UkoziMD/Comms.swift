@@ -10,7 +10,6 @@ import SwiftSerial
 
 //var connection:Int = 0
 let serialPort: SerialPort = SerialPort(path: "/dev/cu.usbserial-21230")
-var currentTrackNumber:UInt8 = 0
 
 
 extension Data {
@@ -152,16 +151,6 @@ func dac() {
         print("Error: \(error)")
     }
 }
-func getPlayingTrackTitle() {
-    let cmd_list:[UInt8] = [0x81,0x08,0x07,0xb0,0x5a,currentTrackNumber,0x00,0xff]
-    let cmd_buffer = Data(cmd_list)
-    do {
-        try serialPort.writeData(cmd_buffer)
-
-    } catch {
-        print("Error: \(error)")
-    }
-}
 func getTotalTracks() {
     let cmd_list:[UInt8] = [0x81,0x07,0x07,0xb0,0x44,0x01,0xff]
     let cmd_buffer = Data(cmd_list)
@@ -178,6 +167,17 @@ func getDeckState() {
     do {
         try serialPort.writeData(cmd_buffer2)
         
+    } catch {
+        print("Error: \(error)")
+    }
+}
+func getTrackRuntime(trackNumber: UInt8) {
+    sleep(1)
+    let cmd_list:[UInt8] = [0x81,0x08,0x07,0xb0,0x45,0x01,trackNumber,0xff]
+    let cmd_buffer = Data(cmd_list)
+    do {
+        try serialPort.writeData(cmd_buffer)
+
     } catch {
         print("Error: \(error)")
     }
