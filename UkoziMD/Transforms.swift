@@ -100,7 +100,7 @@ class responseDecoder: ObservableObject {
     func mdGranularInterpret() {
         
         switch responseData[5] {
-
+            
             
         case 88:
             if responseData[22] == 0 {
@@ -149,11 +149,14 @@ class responseDecoder: ObservableObject {
                 } else {
                     thisTrack.title = decodedTrack
                     thisDisc.tracks.insert(thisTrack, at: trackCounter)
-                    print(thisDisc)
                     trackCounter = trackCounter + 1 }
             } else {
                 let firstTrackTitleLine:String = String(bytes: responseData[7...22], encoding: .ascii)!.removeCharacters(from: "\0")
                 decodedTrack = firstTrackTitleLine
+            }
+            
+            if totalTracks-1 == thisDisc.tracks.count {
+                print(thisDisc)
             }
             
         case 91:
@@ -166,7 +169,6 @@ class responseDecoder: ObservableObject {
                 } else {
                     thisTrack.title = decodedTrack
                     thisDisc.tracks.insert(thisTrack, at: trackCounter)
-                    print(thisDisc)
                     trackCounter = trackCounter + 1 }
             } else {
                 let nextTrackTitleLine:String = String(bytes: responseData[7...22], encoding: .ascii)!.removeCharacters(from: "\0")
@@ -264,44 +266,46 @@ class responseDecoder: ObservableObject {
             }
             
             
-        
-        
-        
-        
-        
-        
-    default: print("New uninterpreted response from deck!"); print(Array(responseData))
-        
-        
+            
+            
+            
+            
+            
+            
+        default: print("New uninterpreted response from deck!"); print(Array(responseData))
+            
+            
+            
+        }
         
     }
     
-}
-
-func getTrackTitles(totalTracks:Int, responseData:UInt8) {
-    if totalTracks > 0 {
-        var track = 1
-        print("Asking MiniDisc deck for track titles...")
-        while(track <= totalTracks) {
-            sleep(1)
-            let trackHex = UInt8(track)
-            let cmd_list:[UInt8] = [0x81,0x08,0x07,0xb0,0x5a,trackHex,0x00,0xff]
-            let cmd_buffer = Data(cmd_list)
-            do {
-                try serialPort.writeData(cmd_buffer)
+    func getTrackTitles(totalTracks:Int, responseData:UInt8) {
+        if totalTracks > 0 {
+            var track = 1
+            print("Asking MiniDisc deck for track titles...")
+            while(track <= totalTracks) {
+                sleep(1)
+                let trackHex = UInt8(track)
+                let cmd_list:[UInt8] = [0x81,0x08,0x07,0xb0,0x5a,trackHex,0x00,0xff]
+                let cmd_buffer = Data(cmd_list)
+                do {
+                    try serialPort.writeData(cmd_buffer)
+                    
+                    track = track + 1
+                } catch {
+                    print("Error: \(error)")
+                }
                 
-                track = track + 1
-            } catch {
-                print("Error: \(error)")
+                
             }
-            
             
         }
         nowPlaying = String(totalTracks)+"Tr"
     }
     
     
-}
+    
 }
 
 var newResponse = responseDecoder()
