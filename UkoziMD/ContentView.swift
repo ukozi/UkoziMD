@@ -205,9 +205,12 @@ struct ContentView: View {
                 DispatchQueue.global(qos: .userInitiated).async {
                     backgroundRead()
                 }
-                sleep(5)
-                getDeckState()
-                stop()
+                let seconds = 5.0
+                DispatchQueue.main.asyncAfter(deadline: .now()+seconds) {
+                    getDeckState()
+                    stop()
+                }
+                
             })
             
             

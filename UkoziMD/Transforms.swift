@@ -31,7 +31,7 @@ class responseDecoder: ObservableObject {
     var responseData: [UInt8] = []
     var totalTracks: Int = 0
     var selectedStartTrack: Int = 0
-    @Published var thisDisc: Disc = Disc(Title: "", trackIndex: "", tracks: [])
+    @Published var thisDisc: Disc = Disc(Title: "", trackIndex: "", runtimeIndex: "", tracks: [])
     @Published var thisTrack: Track = Track(id: 0, title: "", time: "")
     @Published var nowPlaying: String = ""
     @Published var playModesState: Int = 0
@@ -52,10 +52,11 @@ class responseDecoder: ObservableObject {
             if thisDisc.tracks.isEmpty {
                 gatheringState = 1
                 getTitle()
+                
                 getTotalTracks()
                 print("Tracklist is empty.")
             } else {
-                nowPlaying = thisDisc.trackIndex+"Tr"
+                nowPlaying = thisDisc.trackIndex+" Tracks"+"  -  "+thisDisc.runtimeIndex
             }
             
             
@@ -138,6 +139,7 @@ class responseDecoder: ObservableObject {
                 print("Now playing track #" + String(nowPlayingInt))
                 let currentTrackTitle = thisDisc.tracks[nowPlayingInt-1]
                 nowPlaying = currentTrackTitle.title
+            
             } else {
                 print("New uninterpreted response from deck!"); print(Array(responseData))
             }
@@ -188,9 +190,13 @@ class responseDecoder: ObservableObject {
             let totalTracks:Int = Int(responseData[8])
             self.totalTracks = totalTracks
             let strTotalTracks:String = String(responseData[8])
+            let discMinutes = numform.string(from: NSNumber(value: responseData[9]))!
+            let discSeconds = numform.string(from: NSNumber(value: responseData[10]))!
+            let stringRuntime = discMinutes+"min  "+discSeconds+"sec"
             print(strTotalTracks + " tracks found.")
             thisDisc.trackIndex = strTotalTracks
-            nowPlaying = thisDisc.trackIndex+"Tr"
+            thisDisc.runtimeIndex = stringRuntime
+            nowPlaying = thisDisc.trackIndex+" Tracks"+"  -  "+thisDisc.runtimeIndex
             let seconds = 2.0
             DispatchQueue.main.asyncAfter(deadline: .now()+seconds) {
                 self.getTrackTitles(totalTracks: totalTracks)

@@ -10,6 +10,7 @@ import Foundation
 struct Disc {
     var Title: String
     var trackIndex: String
+    var runtimeIndex: String
     var tracks: [Track]
 }
 
