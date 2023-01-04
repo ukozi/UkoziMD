@@ -182,6 +182,16 @@ func getTrackRuntime(trackNumber: UInt8) {
         print("Error: \(error)")
     }
 }
+func getDiscRuntime() {
+    let cmd_list:[UInt8] = [0x81,0x07,0x07,0xb0,0x44,0x01,0xff]
+    let cmd_buffer = Data(cmd_list)
+    do {
+        try serialPort.writeData(cmd_buffer)
+
+    } catch {
+        print("Error: \(error)")
+    }
+}
 
 
 
