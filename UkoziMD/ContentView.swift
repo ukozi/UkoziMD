@@ -10,8 +10,6 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var responseDatum = newResponse
     @State var failedConnect = false
-    @State var playMode: Int = 4
-    @State var recordingSource: Int = 1
     
     var body: some View {
         
@@ -113,17 +111,24 @@ struct ContentView: View {
             
             
             TabView {
-                List(responseDatum.thisDisc.tracks) { track in
-                    HStack {
-                        Text(String(track.id))
-                        Text(track.title)
-                    }
+                if responseDatum.gatheringState == 1 {
+                    ProgressView("Asking MiniDisc deck for track titles and runtimes...")
+                } else {
+                    List(responseDatum.thisDisc.tracks) { track in
+                        HStack {
+                            Text(String(track.id))
+                            Text(track.title)
+                            Spacer()
+                            Text(track.time)
+                        }
+                        
+                        
+                    }.listStyle(.bordered(alternatesRowBackgrounds: true))
+                        .tabItem{
+                            Text("Tracks")
+                        }
                 }
-                .listStyle(.bordered(alternatesRowBackgrounds: true))
                 
-                .tabItem{
-                    Text("Tracks")
-                }
                 
             }
             
@@ -201,13 +206,9 @@ struct ContentView: View {
                     backgroundRead()
                 }
                 sleep(5)
-                stop()
                 getDeckState()
+                stop()
             })
-            
-            
-            
-            
             
             
         }

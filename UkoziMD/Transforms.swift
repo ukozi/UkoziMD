@@ -7,6 +7,7 @@
 
 import Foundation
 var trackCounter: Int = 0
+let numform = NumberFormatter()
 
 
 
@@ -24,14 +25,14 @@ extension String {
 
 
 class responseDecoder: ObservableObject {
-    
+    var gatheringState: Int = 0
     var decodedTitle: String = ""
     var decodedTrack: String = ""
     var responseData: [UInt8] = []
     var totalTracks: Int = 0
     var selectedStartTrack: Int = 0
-    @Published var thisDisc: Disc = Disc(Title: "", tracks: [])
-    @Published var thisTrack: Track = Track(id: 0, title: "")
+    @Published var thisDisc: Disc = Disc(Title: "", trackIndex: "", tracks: [])
+    @Published var thisTrack: Track = Track(id: 0, title: "", time: "")
     @Published var nowPlaying: String = ""
     @Published var playModesState: Int = 0
     //0 = Straight Play thru; 1 = Shuffle; 2 = Program
@@ -48,12 +49,13 @@ class responseDecoder: ObservableObject {
         switch responseData {
         case [144, 7, 5, 71, 2, 2, 255]:
             print("MiniDisc is stopped. Ready.")
-            if totalTracks == 0 {
-                nowPlaying = "Gathering disc information..."
+            if thisDisc.tracks.isEmpty {
+                gatheringState = 1
                 getTitle()
                 getTotalTracks()
+                print("Tracklist is empty.")
             } else {
-                nowPlaying = String(totalTracks)+"Tr"
+                nowPlaying = thisDisc.trackIndex+"Tr"
             }
             
             
@@ -83,10 +85,15 @@ class responseDecoder: ObservableObject {
             
         case [144, 7, 5, 71, 2, 1, 255]:
             print(decodedTitle + " is playing.")
-            currentTrackNumber = UInt8(selectedStartTrack)
-            print("Now playing track #" + String(selectedStartTrack))
-            let currentTrackTitle = thisDisc.tracks[selectedStartTrack-1]
-            nowPlaying = currentTrackTitle.title
+            
+            if UInt8(selectedStartTrack) > 0 {
+                print("Now playing track #" + String(selectedStartTrack))
+                let currentTrackTitle = thisDisc.tracks[selectedStartTrack-1]
+                nowPlaying = currentTrackTitle.title
+            } else {
+                return
+            }
+            
             
         case [144, 7, 5, 71, 32, 132, 255]:
             print("30 seconds to next track...")
@@ -128,16 +135,14 @@ class responseDecoder: ObservableObject {
         case 80:
             if responseData[4] == 32 {
                 let nowPlayingInt:Int = Int(responseData[7])
-                currentTrackNumber = responseData[7]
                 print("Now playing track #" + String(nowPlayingInt))
                 let currentTrackTitle = thisDisc.tracks[nowPlayingInt-1]
                 nowPlaying = currentTrackTitle.title
-                print("New uninterpreted response from deck!"); print(Array(responseData))
             } else {
                 print("New uninterpreted response from deck!"); print(Array(responseData))
             }
             
-        case 90:
+        case 90: // Non-split track titles
             
             thisTrack.id = Int(responseData[6])
             
@@ -159,7 +164,7 @@ class responseDecoder: ObservableObject {
                 print(thisDisc)
             }
             
-        case 91:
+        case 91: // Split Track Titles - this should always match case 90. 
             
             if responseData[22] == 0 {
                 let nextTrackTitleLine:String = String(bytes: responseData[7...22], encoding: .ascii)!.removeCharacters(from: "\0")
@@ -175,12 +180,29 @@ class responseDecoder: ObservableObject {
                 decodedTrack = decodedTrack + nextTrackTitleLine
             }
             
+            if totalTracks-1 == thisDisc.tracks.count {
+                print(thisDisc)
+            }
+            
         case 96:
             let totalTracks:Int = Int(responseData[8])
             self.totalTracks = totalTracks
             let strTotalTracks:String = String(responseData[8])
-            getTrackTitles(totalTracks: totalTracks, responseData: responseData[8])
-            print(decodedTitle + " has " + strTotalTracks + " tracks.")
+            print(strTotalTracks + " tracks found.")
+            thisDisc.trackIndex = strTotalTracks
+            nowPlaying = thisDisc.trackIndex+"Tr"
+            let seconds = 2.0
+            DispatchQueue.main.asyncAfter(deadline: .now()+seconds) {
+                self.getTrackTitles(totalTracks: totalTracks)
+            }
+            
+        case 98: //received track time
+            numform.minimumIntegerDigits = 2
+            let trackId = Int(responseData[7])
+            let minutes = numform.string(from: NSNumber(value: responseData[8]))!
+            let seconds = numform.string(from: NSNumber(value: responseData[9]))!
+            let stringRuntime = minutes+":"+seconds
+            thisDisc.tracks[trackId-1].time = stringRuntime
             
         case 32:
             
@@ -280,10 +302,10 @@ class responseDecoder: ObservableObject {
         
     }
     
-    func getTrackTitles(totalTracks:Int, responseData:UInt8) {
+    func getTrackTitles(totalTracks:Int) {
         if totalTracks > 0 {
             var track = 1
-            print("Asking MiniDisc deck for track titles...")
+            print("Asking MiniDisc deck for track titles and runtimes...")
             while(track <= totalTracks) {
                 sleep(1)
                 let trackHex = UInt8(track)
@@ -292,6 +314,7 @@ class responseDecoder: ObservableObject {
                 do {
                     try serialPort.writeData(cmd_buffer)
                     
+                    getTrackRuntime(trackNumber: trackHex)
                     track = track + 1
                 } catch {
                     print("Error: \(error)")
@@ -301,7 +324,8 @@ class responseDecoder: ObservableObject {
             }
             
         }
-        nowPlaying = String(totalTracks)+"Tr"
+        gatheringState = 0
+        
     }
     
     
