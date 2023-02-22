@@ -4,4 +4,4 @@ The MDS-PC2 is a home MiniDisc deck designed to connect to a HiFi system. It was
 
 UkoziMD is a modern Mac app to talk over PCLK-2 to an MDS-PC2 minidisc unit. While it will eventually include all of the editing functionality of MD Editor it is currently a remote control for playback.
 
-<img width="687" alt="ukozi-screenshot" src="https://user-images.githubusercontent.com/3391773/206024965-b064b07d-f7a4-4f16-918a-f74ae73808bb.png">
+<img width="687" alt="ukozi-screenshot" src="https://github.com/ukozi/UkoziMD/raw/master/ukozi-screenshot.png">
